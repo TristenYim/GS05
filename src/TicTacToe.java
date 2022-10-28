@@ -1,6 +1,6 @@
 /*
 Author: Tristen Yim
-Project Name: Tic-Tac-Toe
+Project Name: Tic-Tac-Toe (GS05-01)
 Purpose:
     To let the user play a game of tic-tac-toe against another user
 Pseudocode:

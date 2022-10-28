@@ -1,6 +1,6 @@
 /*
 Author: Tristen Yim
-Project Name: Hangman
+Project Name: Hangman (GS05-02)
 Purpose:
     To let the user play hangman
 Pseudocode:
