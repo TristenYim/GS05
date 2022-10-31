@@ -1,3 +1,29 @@
+/*
+Author: Tristen Yim
+Project Name: Mastermind (GS05-03)
+Filename: MastermindTester.java
+Purpose:
+    To create a scoring algorithm that tests mastermind guesses against the secret word
+Pseudocode:
+    scoreCodeWords:
+        A byte array is declared for both codeword1 and codeword2, called secretDigits and guessDigits
+        An integer for the black pegs (black) and white pegs (white) is declared and set to 0
+        First, secretDigits is indexed:
+            If a digit is guessDigits is the same as the current indexed digit in secretDigits:
+                1 is added to the black
+                Then the digit at the current index is set to -1 in both secretDigits and guessDigits
+        Next, guessDigits is indexed:
+            As long as the current indexed digit of guessDigits is not equal to 1, secretDigits is indexed separately:
+                If the current indexed digit in secretDigits is not equal to 1 and is the same as the current indexed digit in guessDigits:
+                    1 is added to white
+                    Then the current indexed digit in guessDigits and secretDigits is set to -1
+        Black and white are returned in a new int array
+Maintenance Log:
+    Started the scoring algorithm (28 Oct 2022 9:50)
+    Determined I need to use a boolean array to check each digit. Didn't start much code (28 Oct 2022 9:54)
+    Finished the scoring algorithm, though it no longer uses a boolean array and instead sets each used digit to -1 (31 Oct 2022 10:10)
+*/
+
 // Copyright (c) Michael M. Magruder (https://github.com/mikemag)
 //
 // This source code is licensed under the MIT license found in the
@@ -60,18 +86,6 @@ public class MastermindTester {
     }
 
     static class TristenYim extends StudentAlgorithm {
-
-        /*
-        Author: Tristen Yim
-        Project Name: Mastermind (GS05-03)
-        Purpose:
-            To let the user play mastermind against the computer
-        Pseudocode:
-        Maintenance Log:
-            Started (28 Oct 2022 9:50)
-            Determined I need to use a boolean array to check each digit (28 Oct 2022 9:54)
-        */
-
         public TristenYim() {
             super("TristenYim");
         }
@@ -80,12 +94,25 @@ public class MastermindTester {
             // This algorithm likes the codewords to be in byte arrays.
             byte[] secretDigits = codeStringToBytes(codeword1);
             byte[] guessDigits = codeStringToBytes(codeword2);
-            boolean[] checkedDigits = new boolean[4];
-
             int black = 0, white = 0;
+            // Setting a digit to -1 tells the program "Hey, this digit has already been used, please don't check it again!"
             for (int i = 0; i < secretDigits.length; i++) {
-
+                if (secretDigits[i] == guessDigits[i]) {
+                    secretDigits[i] = -1;
+                    guessDigits[i] = -1;
+                    black++;
+                }
             }
+            for (int i = 0; i < guessDigits.length; i++) {
+                for (int j = 0; guessDigits[i] != -1 && j < secretDigits.length; j++) {
+                    if (guessDigits[i] == secretDigits[j] && secretDigits[j] != -1) {
+                        guessDigits[i] = -1;
+                        secretDigits[j] = -1;
+                        white++;
+                    }
+                }
+            }
+            return new int[] {black, white};
         }
     }
 
@@ -187,6 +214,7 @@ public class MastermindTester {
     public static void main(String[] args) {
         StudentAlgorithm[] algos = {
                 new ExampleStudent(),
+                new TristenYim(),
                 // Add more student algorithms here
         };
 
