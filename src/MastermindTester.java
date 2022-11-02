@@ -22,6 +22,7 @@ Maintenance Log:
     Started the scoring algorithm (28 Oct 2022 9:50)
     Determined I need to use a boolean array to check each digit. Didn't start much code (28 Oct 2022 9:54)
     Finished the scoring algorithm, though it no longer uses a boolean array and instead sets each used digit to -1 (31 Oct 2022 10:10)
+    Finished the second scoring algorithm, even making it possible to use it with any number of colors, not just 10 (2 Nov 2022 10:55)
 */
 
 // Copyright (c) Michael M. Magruder (https://github.com/mikemag)
@@ -112,6 +113,37 @@ public class MastermindTester {
                     }
                 }
             }
+            return new int[] {black, white};
+        }
+    }
+
+    static class TristenYim2 extends StudentAlgorithm {
+        private final int COLORS_IN_GAME;
+        public TristenYim2(int colorsInGame) {
+            super("TristenYim2");
+            COLORS_IN_GAME = colorsInGame;
+        }
+
+        public int[] scoreCodewords(String codeword1, String codeword2) {
+            // This algorithm likes the codewords to be in byte arrays.
+            byte[] secretDigits = codeStringToBytes(codeword1);
+            byte[] guessDigits = codeStringToBytes(codeword2);
+            // Rather than making two arrays, space is being saved by storing the colors for both in one
+            byte[] colors = new byte[2 * COLORS_IN_GAME];
+            int hits = 0, black = 0, white = 0;
+            for (int i = 0; i < secretDigits.length; i++) {
+                colors[secretDigits[i]]++;
+                colors[guessDigits[i] + COLORS_IN_GAME]++;
+            }
+            for (int i = 0; i < colors.length / 2; i++) {
+                hits += Integer.min(colors[i], colors[i + COLORS_IN_GAME]);
+            }
+            for (int i = 0; i < secretDigits.length; i++) {
+                if (secretDigits[i] == guessDigits[i]) {
+                    black++;
+                }
+            }
+            white = hits - black;
             return new int[] {black, white};
         }
     }
@@ -215,6 +247,7 @@ public class MastermindTester {
         StudentAlgorithm[] algos = {
                 new ExampleStudent(),
                 new TristenYim(),
+                new TristenYim2(10)
                 // Add more student algorithms here
         };
 

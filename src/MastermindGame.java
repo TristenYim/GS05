@@ -10,7 +10,7 @@ Maintenance Log:
 */
 
 import java.util.Random;
-
+/*
 public class MastermindGame {
     private static final Random R = new Random();
     private static final int allowedAttempts = 13;
@@ -27,3 +27,4 @@ public class MastermindGame {
 
     }
 }
+*/
