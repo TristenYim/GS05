@@ -15,17 +15,23 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class MastermindGame {
-    private static final Random R = new Random();
-    private static final int ALLOWED_ATTEMPTS = 13;
-    public static void main (String[] args) {
+public class MastermindGame extends MastermindEngine.MyEngine {
+    private final Random R = new Random();
+    private final int ALLOWED_ATTEMPTS = 13;
+    // Rather than making a new interface for the engine, I simply added a cheat mode to the original one since the original interface is okay
+    private final boolean CHEAT_MODE = true;
+    public MastermindGame(int colors) {
+        super(colors);
+    }
+    public void main (String[] args) {
+        new MastermindGame(10);
         Scanner consoleInput = new Scanner(System.in);
         String secretCode = String.valueOf(R.nextInt(10)) + String.valueOf(R.nextInt(10)) +
                 String.valueOf(R.nextInt(10)) + String.valueOf(R.nextInt(10));
         int attempt = 0;
         while (attempt < ALLOWED_ATTEMPTS) {
             System.out.println("You have " + (ALLOWED_ATTEMPTS - attempt) + " attempts left!");
-            if (guess(consoleInput, secretCode)) {
+            if (guess(consoleInput, secretCode, attempt)) {
                 System.out.println("You win!");
                 return;
             }
@@ -33,24 +39,37 @@ public class MastermindGame {
         }
         System.out.println("You lose! The code was " + secretCode);
     }
-    private static boolean guess(Scanner consoleInput, String secretCode) {
+    private boolean guess(Scanner consoleInput, String secretCode, int attempt) {
         while (true) {
             System.out.print("Please input your guess: ");
+            if (CHEAT_MODE) {
+                if (attempt == 0) {
+                    System.out.println("[o_o]: Guess two sets of two numbers, such as 1122");
+                } else {
+                    System.out.println("[o_o]: Try " + recommendGuess());
+                }
+            }
             String guessedCode = consoleInput.next();
             String convertedCode = toCode(guessedCode);
             if (convertedCode.equals("")) {
                 continue;
             }
-            MastermindTester.StudentAlgorithm scoreAlgo = new MastermindTester.TristenYim2(10);
-            int[] score = scoreAlgo.scoreCodewords(secretCode, convertedCode);
+            scoreCodewords(secretCode, convertedCode);
             System.out.println(Arrays.toString(score));
+            if (CHEAT_MODE) {
+                if (attempt == 0) {
+                    firstGuess(convertedCode);
+                } else {
+                    eliminateImpossibleCodes();
+                }
+            }
             if (score[0] == 4) {
                 return true;
             }
             return false;
         }
     }
-    private static String toCode(String stringToTest) {
+    private String toCode(String stringToTest) {
         if (stringToTest.length() < 4) {
             return "";
         }

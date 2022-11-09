@@ -118,7 +118,7 @@ public class MastermindTester {
     }
 
     static class TristenYim2 extends StudentAlgorithm {
-        private final int COLORS_IN_GAME;
+        protected final int COLORS_IN_GAME;
         public TristenYim2(int colorsInGame) {
             super("TristenYim2");
             COLORS_IN_GAME = colorsInGame;

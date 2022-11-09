@@ -11,21 +11,56 @@ Maintenance Log:
 */
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class MastermindEngine {
-    ArrayList<String> possibleCodes = new ArrayList<String>();
-    public void MastermindEngine(int colors) {
-        for (int i = 0; i < colors; i++) {
-            for (int j = 0; j < colors; j++) {
-                for (int k = 0; k < colors; k++) {
-                    for (int l = 0; j < colors; l++) {
-                        possibleCodes.add(i + j + k + l);
+public class MastermindEngine extends MastermindTester.TristenYim2 {
+    private final String SECRET_CODE;
+    MastermindEngine(int colors) {
+        super(colors);
+        Random R = new Random();
+        String secretCode = "";
+        for (int i = 0; i < 4; i++) {
+            secretCode += Integer.toString(R.nextInt(COLORS_IN_GAME));
+        }
+        SECRET_CODE = secretCode;
+    }
+    protected String getSecretCode() {
+        return SECRET_CODE;
+    }
+    protected int[] scoreCodeword(String guess) {
+        return scoreCodewords(SECRET_CODE, guess);
+    }
+    static class MyEngine extends MastermindEngine {
+        private ArrayList<String> possibleCodes = new ArrayList<String>();
+        public MyEngine(int colors) {
+            super(colors);
+        }
+        protected String recommendGuess() {
+            Random R = new Random();
+            return possibleCodes.get(R.nextInt(possibleCodes.size()));
+        }
+        protected void firstGuess(String firstGuess) {
+            int[] firstGuessOutput = scoreCodeword(firstGuess);
+            for (int i = 0; i < COLORS_IN_GAME; i++) {
+                for (int j = 0; j < COLORS_IN_GAME; j++) {
+                    for (int k = 0; k < COLORS_IN_GAME; k++) {
+                        for (int l = 0; l < COLORS_IN_GAME; l++) {
+                            String codeToTest = Integer.toString(i) + Integer.toString(j) + Integer.toString(k) + Integer.toString(k);
+                            if(firstGuessOutput == scoreCodewords(firstGuess, codeToTest)) {
+                                possibleCodes.add(codeToTest);
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-    public static void eliminatePossibleCodes(int[] pins) {
-
+        public void eliminateImpossibleCodes(String guessedCode, int[] pins) {
+            for (int i = 0; i < possibleCodes.size(); i++) {
+                if (pins != scoreCodewords(guessedCode, possibleCodes.get(i))) {
+                    possibleCodes.remove(i);
+                    i--;
+                }
+            }
+        }
     }
 }
