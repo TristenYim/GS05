@@ -8,6 +8,7 @@ Pseudocode:
 Maintenance Log:
     Started (4 Nov 2022 9:42)
     Didn't get much done, though started working on making the program fill the arraylist with all possible codes (4 Nov 2022 9:56)
+    Something about the engine doesn't work... I don't have time to figure out what it is yet. Right now the engine just recommends a random guess from the list of guesses (9 Nov 2022 10:58)
 */
 
 import java.util.ArrayList;
@@ -35,11 +36,11 @@ public class MastermindEngine extends MastermindTester.TristenYim2 {
         public MyEngine(int colors) {
             super(colors);
         }
-        protected String recommendGuess() {
+        public String recommendGuess() {
             Random R = new Random();
             return possibleCodes.get(R.nextInt(possibleCodes.size()));
         }
-        protected void firstGuess(String firstGuess) {
+        public void firstGuess(String firstGuess) {
             int[] firstGuessOutput = scoreCodeword(firstGuess);
             for (int i = 0; i < COLORS_IN_GAME; i++) {
                 for (int j = 0; j < COLORS_IN_GAME; j++) {
