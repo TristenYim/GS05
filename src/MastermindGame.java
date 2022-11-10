@@ -11,6 +11,7 @@ Maintenance Log:
     Finished (4 Nov 2022 9:56)
     Added a cheat mode to this - Cheat mode uses the the MasterMindEngine to recommend guesses to the player (9 Nov 2022 10:57)
     Added methods to sync the secret code here with the one in the engine - To make randomization work (10 Nov 2022 11:02)
+    Changed the UI so it says what pin each number is rather than assuming you know, and made the engine look confused if you ignore it's recommendation (10 Nov 2022 12:16)
 */
 
 import java.util.Arrays;
@@ -47,20 +48,22 @@ public class MastermindGame {
                     System.out.println("\n[o_o]: Try " + engine.recommendGuess());
                 }
             }
-            String guessedCode = consoleInput.next();
-            String convertedCode = toCode(guessedCode);
-            if (convertedCode.equals("")) {
+            String guessedCode = tocode(consoleInput.next());
+            if (CHEAT_MODE && attempt > 0 && guessedCode != engine.recommendGuess()) {
+                System.out.println("[o_O]: ?!???! Okay then?");
+            }
+            if (guessedCode.equals("")) {
                 continue;
             }
-            int[] score = engine.scoreCodewords(secretCode, convertedCode);
+            int[] score = engine.scoreCodewords(secretCode, guessedCode);
             if (CHEAT_MODE) {
                 if (attempt == 0) {
-                    engine.firstGuess(convertedCode);
+                    engine.firstGuess(guessedCode);
                 } else {
-                    engine.eliminateImpossibleCodes(convertedCode, score);
+                    engine.eliminateImpossibleCodes(guessedCode, score);
                 }
             }
-            System.out.println(Arrays.toString(score));
+            System.out.println("Black Pins: " + score[0], "\nWhite Pins: " + score[1]);
             if (score[0] == 4) {
                 return true;
             }
@@ -68,6 +71,7 @@ public class MastermindGame {
         }
     }
     private static String toCode(String stringToTest) {
+        // The empty string is used as a value to mark a guess that doesn't contain four numbers
         if (stringToTest.length() < 4) {
             return "";
         }
