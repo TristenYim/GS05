@@ -10,10 +10,10 @@ Maintenance Log:
     Now takes input but doesn't do error checking quite right yet (3 Nov 2022 10:56)
     Finished (4 Nov 2022 9:56)
     Added a cheat mode to this - Cheat mode uses the the MasterMindEngine to recommend guesses to the player (9 Nov 2022 10:57)
+    Added methods to sync the secret code here with the one in the engine - To make randomization work (10 Nov 2022 11:02)
 */
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 public class MastermindGame {
@@ -21,10 +21,11 @@ public class MastermindGame {
     // Rather than making a new interface for the engine, I simply added a cheat mode to the original one since the original interface is okay
     private static final boolean CHEAT_MODE = true;
     public static void main (String[] args) {
-        final Random R = new Random();
-        MastermindEngine.MyEngine engine = new MastermindEngine.MyEngine(10);
+        //final Random R = new Random();
+        //String secretCode = Integer.toString(R.nextInt(10)) + R.nextInt(10) + R.nextInt(10) + R.nextInt(10);
+        String secretCode = "2521";
+        MastermindEngine.MyEngine engine = new MastermindEngine.MyEngine(6, secretCode);
         Scanner consoleInput = new Scanner(System.in);
-        String secretCode = engine.getSecretCode();
         int attempt = 0;
         while (attempt < ALLOWED_ATTEMPTS) {
             System.out.println("You have " + (ALLOWED_ATTEMPTS - attempt) + " attempts left!");
@@ -41,9 +42,9 @@ public class MastermindGame {
             System.out.print("Please input your guess: ");
             if (CHEAT_MODE) {
                 if (attempt == 0) {
-                    System.out.println("[o_o]: Guess two sets of two numbers, such as 1122");
+                    System.out.println("\n[o_o]: Guess two sets of two numbers, such as 1122");
                 } else {
-                    System.out.println("[o_o]: Try " + engine.recommendGuess());
+                    System.out.println("\n[o_o]: Try " + engine.recommendGuess());
                 }
             }
             String guessedCode = consoleInput.next();
@@ -52,7 +53,6 @@ public class MastermindGame {
                 continue;
             }
             int[] score = engine.scoreCodewords(secretCode, convertedCode);
-            System.out.println(Arrays.toString(score));
             if (CHEAT_MODE) {
                 if (attempt == 0) {
                     engine.firstGuess(convertedCode);
@@ -60,6 +60,7 @@ public class MastermindGame {
                     engine.eliminateImpossibleCodes(convertedCode, score);
                 }
             }
+            System.out.println(Arrays.toString(score));
             if (score[0] == 4) {
                 return true;
             }
