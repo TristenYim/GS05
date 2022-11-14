@@ -48,22 +48,15 @@ public class MastermindGame {
                     System.out.println("\n[o_o]: Try " + engine.recommendGuess());
                 }
             }
-            String guessedCode = tocode(consoleInput.next());
-            if (CHEAT_MODE && attempt > 0 && guessedCode != engine.recommendGuess()) {
-                System.out.println("[o_O]: ?!???! Okay then?");
-            }
+            String guessedCode = toCode(consoleInput.next());
             if (guessedCode.equals("")) {
                 continue;
             }
             int[] score = engine.scoreCodewords(secretCode, guessedCode);
             if (CHEAT_MODE) {
-                if (attempt == 0) {
-                    engine.firstGuess(guessedCode);
-                } else {
-                    engine.eliminateImpossibleCodes(guessedCode, score);
-                }
+                engine.eliminateImpossibleCodes(guessedCode, score);
             }
-            System.out.println("Black Pins: " + score[0], "\nWhite Pins: " + score[1]);
+            System.out.println("Black Pins: " + score[0] + "\nWhite Pins: " + score[1]);
             if (score[0] == 4) {
                 return true;
             }
