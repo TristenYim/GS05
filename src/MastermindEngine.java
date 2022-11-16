@@ -15,78 +15,76 @@ Maintenance Log:
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class MastermindEngine extends MastermindTester.TristenYim2 {
-    private final String SECRET_CODE;
-    MastermindEngine(int colors, String secretCode) {
+    private ArrayList<String> possibleCodes = new ArrayList<>();
+    private ArrayList<String> possibleGuesses = new ArrayList<>();
+    public MastermindEngine(int colors) {
         super(colors);
-        Random R = new Random();
-        SECRET_CODE = secretCode;
+        for (int i = 0; i < COLORS_IN_GAME; i++) {
+            for (int j = 0; j < COLORS_IN_GAME; j++) {
+                for (int k = 0; k < COLORS_IN_GAME; k++) {
+                    for (int l = 0; l < COLORS_IN_GAME; l++) {
+                        String codeToAdd = Integer.toString(i) + j + k + l;
+                        possibleCodes.add(codeToAdd);
+                        possibleGuesses.add(codeToAdd);
+                    }
+                }
+            }
+        }
     }
-    protected int[] scoreCodeword(String guess) {
-        return scoreCodewords(SECRET_CODE, guess);
-    }
-    static class MyEngine extends MastermindEngine {
-        private ArrayList<String> possibleCodes = new ArrayList<>();
-        public MyEngine(int colors, String secretCode) {
-            super(colors, secretCode);
-            for (int i = 0; i < COLORS_IN_GAME; i++) {
-                for (int j = 0; j < COLORS_IN_GAME; j++) {
-                    for (int k = 0; k < COLORS_IN_GAME; k++) {
-                        for (int l = 0; l < COLORS_IN_GAME; l++) {
-                            possibleCodes.add(Integer.toString(i) + j + k + l);
-                        }
-                    }
-                }
-            }
+    public String recommendGuess() {
+        if (possibleCodes.size() <= 2) {
+            return possibleCodes.get(0);
         }
-        public String recommendGuess() {
-            if (possibleCodes.size() <= 2) {
-                return possibleCodes.get(0);
-            }
-            int minGuaranteedPossibilities = 9999;
-            int minGuaranteedPossibilitiesIndex = 0;
-            for (int i = 0; i < possibleCodes.size(); i++) {
-                int maxPossibilities = findMaxPossibilities(possibleCodes.get(i));
-                if (maxPossibilities < minGuaranteedPossibilities) {
-                    minGuaranteedPossibilities = maxPossibilities;
-                    minGuaranteedPossibilitiesIndex = i;
-                }
-            }
-            return possibleCodes.get(minGuaranteedPossibilitiesIndex);
-        }
-        private int findMaxPossibilities(String codeToTest) {
-            int worstCase = 0;
-            int[] outputToTest = {0, 0};
-            while (outputToTest[0] < 4) {
-                while (outputToTest[1] < 4) {
-                    int possibilitiesOfThisCase = 0;
-                    for (int i = 0; i < possibleCodes.size(); i++) {
-                        if (!codeToTest.equals(possibleCodes.get(i)) &&
-                                Arrays.equals(outputToTest, scoreCodewords(codeToTest, possibleCodes.get(i)))) {
-                            possibilitiesOfThisCase++;
-                        }
-                    }
-                    if (possibilitiesOfThisCase > worstCase) {
-                        worstCase = possibilitiesOfThisCase;
-                    }
-                    outputToTest[1]++;
-                }
-                outputToTest[0]++;
-                outputToTest[1] = 0;
-            }
-            return worstCase;
-        }
-        public void eliminateImpossibleCodes(String guessedCode, int[] pins) {
-            for (int i = 0; i < possibleCodes.size(); i++) {
-                if (!Arrays.equals(pins, scoreCodewords(guessedCode, possibleCodes.get(i)))) {
-                    possibleCodes.remove(i);
-                    i--;
+        int lowestMaxPossibilities = 9999;
+        int lowestMaxPossibilitiesIndex = 0;
+        boolean isPossibleCode = false;
+        for (int i = 0; i < possibleGuesses.size(); i++) {
+            int maxPossibilities = findMaxPossibilities(possibleGuesses.get(i));
+            if (maxPossibilities < lowestMaxPossibilities) {
+                lowestMaxPossibilities = maxPossibilities;
+                lowestMaxPossibilitiesIndex = i;
+                if(possibleCodes.contains(possibleGuesses.get(i))) {
+                    isPossibleCode = true;
                 } else {
-                    //System.out.println(possibleCodes.get(i));
+                    isPossibleCode = false;
                 }
+            } else if (maxPossibilities == lowestMaxPossibilities && isPossibleCode == false) {
+                if(possibleCodes.contains(possibleGuesses.get(i))) {
+                    lowestMaxPossibilities = maxPossibilities;
+                    lowestMaxPossibilitiesIndex = i;
+                    isPossibleCode = true;
+                }
+            } else if (maxPossibilities == possibleCodes.size()) {
+                possibleGuesses.remove(i);
             }
         }
+        return possibleGuesses.get(lowestMaxPossibilitiesIndex);
+    }
+    public int findMaxPossibilities(String codeToTest) {
+        int maxPossibilities = 0;
+        int[][] outputCount = new int[5][5];
+        for (int i = 0; i < possibleCodes.size(); i++) {
+            int[] output = scoreCodewords(codeToTest, possibleCodes.get(i));
+            outputCount[output[0]][output[1]]++;
+        }
+        for (int i = 0; i < outputCount.length; i++) {
+            for (int j = 0; j < outputCount.length; j++) {
+                maxPossibilities = Integer.max(maxPossibilities, outputCount[i][j]);
+            }
+        }
+        return maxPossibilities;
+    }
+    public void eliminateImpossibleCodes(String guessedCode, int[] pins) {
+        for (int i = 0; i < possibleCodes.size(); i++) {
+            if (!Arrays.equals(pins, scoreCodewords(guessedCode, possibleCodes.get(i)))) {
+                possibleCodes.remove(i);
+                i--;
+            }
+        }
+    }
+    public int getGuessPoolSize() {
+        return possibleGuesses.size();
     }
 }

@@ -25,7 +25,7 @@ public class MastermindGame {
         //final Random R = new Random();
         //String secretCode = Integer.toString(R.nextInt(10)) + R.nextInt(10) + R.nextInt(10) + R.nextInt(10);
         String secretCode = "2521";
-        MastermindEngine.MyEngine engine = new MastermindEngine.MyEngine(6, secretCode);
+        MastermindEngine engine = new MastermindEngine(6);
         Scanner consoleInput = new Scanner(System.in);
         int attempt = 0;
         while (attempt < ALLOWED_ATTEMPTS) {
@@ -38,7 +38,7 @@ public class MastermindGame {
         }
         System.out.println("You lose! The code was " + secretCode);
     }
-    private static boolean guess(Scanner consoleInput, String secretCode, int attempt, MastermindEngine.MyEngine engine) {
+    private static boolean guess(Scanner consoleInput, String secretCode, int attempt, MastermindEngine engine) {
         while (true) {
             System.out.print("Please input your guess: ");
             if (CHEAT_MODE) {
