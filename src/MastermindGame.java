@@ -4,6 +4,15 @@ Project Name: Mastermind (GS05-03)
 Purpose:
     To let the user play mastermind
 Pseudocode:
+    A constant for the number of attempts allowed (13) is declared and initialized privately
+    A constant for whether cheat mode is enabled is declared and initialized privately
+    main
+        Sets the secretCode to 2521
+        Calls guess until the user wins or loses (The user loses if they hit the allowed attempts)
+    guess takes console input, the attempt, the secret code, and the engine as input
+        guess gets input from the user for the code to guess, with error checking
+            If cheat mode is enabled, the engine recommends a guess
+        Otherwise, the number of attempts left and the pins are outputted
 Maintenance Log:
     Started the game UI (31 Oct 2022 10:12)
     Started setting up the variables and methods but didn't get to make much actual code (31 Oct 2022 10:40)
@@ -13,6 +22,7 @@ Maintenance Log:
     Added methods to sync the secret code here with the one in the engine - To make randomization work (10 Nov 2022 11:02)
     Changed the UI so it says what pin each number is rather than assuming you know, and made the engine look confused if you ignore it's recommendation (10 Nov 2022 12:16)
     Updated to work properly with the engine (16 Nov 2022 10:56)
+    Not done with the pseudocode (17 Nov 2022 10:55)
 */
 
 import java.util.Scanner;

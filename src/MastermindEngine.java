@@ -5,6 +5,24 @@ Filename: MastermindEngine.java
 Purpose:
     To play mastermind in the most optimal way
 Pseudocode:
+    MastermindEngine stores an ArrayList of the possible codes and possible guesses
+        possibleCodes contains all codes that have not been eliminated: possibleGuesses contains all codes
+    The constructor takes a color input and sets up possibleCodes, possibleGuesses, and the scoring algorithm based on the number of colors
+    eliminateImpossibleCodes takes a guess and the result of playing with that guess as input
+        It tests all codes in the list of possible codes. Any codes that don't get the same output when scored against the guess as the inputted result are removed from the list
+    recommendGuess takes no input and returns a String, the guess it recommends
+        If there are 2 or less codes left, it recommends the first one in the list
+        Otherwise, it tests all possible guesses
+        In the loop that tests all possible guesses:
+            It calls findMaxPossibilities with the guess its testing to determine how good of a guess it is (the lower the value returned the better)
+            If this code returns the lowest value its found, it is recorded
+            It also records if this code is a possible guess or not
+            If the tested code returns a value equal to the lowest value found, it keeps whichever one is a possible guess. Otherwise it does nothing
+        It returns the guess used to get the recorded possibilities
+    findMaxPossibilities takes a code to test as input
+        It creates an array which keeps track of the number of possibilities remaining for each output
+        Then it tests all possible codes against the inputted code and adds one to whichever output it got in the array
+        Then, every element of the array is compared at the end. The output with the most possible codes (This is an engine - we're looking for the best worst case) is returned.
 Maintenance Log:
     Started (4 Nov 2022 9:42)
     Didn't get much done, though started working on making the program fill the arraylist with all possible codes (4 Nov 2022 9:56)
@@ -15,6 +33,7 @@ Maintenance Log:
         Currently I have it eliminate guesses that give no information, but this seems to only eliminate about 16 guesses (16 Nov 2022 10:56)
     Removed the code that removes guesses and added a method that resets the possibleGuesses list (17 Nov 2022 10:19)
         Removed getGuessPoolSize since it's no longer used (17 Nov 2022 10:26)
+        Updated the heading (17 Nov 2022 10:50)
 */
 
 import java.util.ArrayList;
