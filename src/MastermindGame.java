@@ -12,9 +12,9 @@ Maintenance Log:
     Added a cheat mode to this - Cheat mode uses the the MasterMindEngine to recommend guesses to the player (9 Nov 2022 10:57)
     Added methods to sync the secret code here with the one in the engine - To make randomization work (10 Nov 2022 11:02)
     Changed the UI so it says what pin each number is rather than assuming you know, and made the engine look confused if you ignore it's recommendation (10 Nov 2022 12:16)
+    Updated to work properly with the engine (16 Nov 2022 10:56)
 */
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MastermindGame {
@@ -57,10 +57,7 @@ public class MastermindGame {
                 engine.eliminateImpossibleCodes(guessedCode, score);
             }
             System.out.println("Black Pins: " + score[0] + "\nWhite Pins: " + score[1]);
-            if (score[0] == 4) {
-                return true;
-            }
-            return false;
+            return score[0] == 4;
         }
     }
     private static String toCode(String stringToTest) {

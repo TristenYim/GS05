@@ -11,6 +11,9 @@ Maintenance Log:
     Something about the engine doesn't work... I don't have time to figure out what it is yet. Right now the engine just recommends a random guess from the list of guesses (9 Nov 2022 10:58)
     The engine now recommends the best first case, except it doesn't do it properly because it doesn't recommend the right last code (10 Nov 2022 11:01)
     Renamed variables and methods so they use more descriptive names such as "maxPossibilities" rather than "worstCase" (14 Nov 2022 10:28)
+    Modified the engine so it not only checks all possible codes but all possible guesses too
+        Currently I have it eliminate guesses that give no information, but this seems to only eliminate about 16 guesses (16 Nov 2022 10:56)
+    Removed the code that removes guesses and added a method that resets the possibleGuesses list (17 Nov 2022 10:19)
 */
 
 import java.util.ArrayList;
@@ -45,19 +48,12 @@ public class MastermindEngine extends MastermindTester.TristenYim2 {
             if (maxPossibilities < lowestMaxPossibilities) {
                 lowestMaxPossibilities = maxPossibilities;
                 lowestMaxPossibilitiesIndex = i;
+                isPossibleCode = possibleCodes.contains(possibleGuesses.get(i));
+            } else if (maxPossibilities == lowestMaxPossibilities && !isPossibleCode) {
                 if(possibleCodes.contains(possibleGuesses.get(i))) {
-                    isPossibleCode = true;
-                } else {
-                    isPossibleCode = false;
-                }
-            } else if (maxPossibilities == lowestMaxPossibilities && isPossibleCode == false) {
-                if(possibleCodes.contains(possibleGuesses.get(i))) {
-                    lowestMaxPossibilities = maxPossibilities;
                     lowestMaxPossibilitiesIndex = i;
                     isPossibleCode = true;
                 }
-            } else if (maxPossibilities == possibleCodes.size()) {
-                possibleGuesses.remove(i);
             }
         }
         return possibleGuesses.get(lowestMaxPossibilitiesIndex);
@@ -86,5 +82,17 @@ public class MastermindEngine extends MastermindTester.TristenYim2 {
     }
     public int getGuessPoolSize() {
         return possibleGuesses.size();
+    }
+    public void resetCodePool() {
+        possibleCodes.clear();
+        for (int i = 0; i < COLORS_IN_GAME; i++) {
+            for (int j = 0; j < COLORS_IN_GAME; j++) {
+                for (int k = 0; k < COLORS_IN_GAME; k++) {
+                    for (int l = 0; l < COLORS_IN_GAME; l++) {
+                        possibleCodes.add(Integer.toString(i) + j + k + l);
+                    }
+                }
+            }
+        }
     }
 }
