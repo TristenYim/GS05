@@ -7,6 +7,7 @@ Maintenance Log:
     Engine UI is completely broken (14 Nov 2022 10:41)
     Engine UI displays useful information, but is only meant to play one game (16 Nov 2022 10:56)
     Set up the engine so it now will play all games with 6 colors and 10 colors with 3 starting guesses, awaiting results (17 Nov 2022 10:19)
+        Removed guess pool size call it no longer displays useful info (17 Nov 2022 10:26)
 Notes:
     Initial code: 0011, max 5 rounds avg 4.476, 6 colors
     Initial Game: 256 combos, 0233, 44 combos, 2415, 7 combos, 0351, 1 combo, 2521
@@ -56,7 +57,6 @@ public class MastermindEngineUI {
                 System.out.println("[o_o] After " + rounds + " rounds, guessing [" + guess + "]");
             }
             output = engine.scoreCodewords(secretCode, guess);
-            System.out.println("[o_o] Guess pool size: " + engine.getGuessPoolSize());
             System.out.println("[o_o] Max possibilities left: " + engine.findMaxPossibilities(guess));
             if (output[0] == 4) {
                 System.out.println("[0_0] Won with guess [" + guess + "] on round " + (rounds + 1) + "!");

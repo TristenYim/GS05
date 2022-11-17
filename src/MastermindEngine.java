@@ -14,6 +14,7 @@ Maintenance Log:
     Modified the engine so it not only checks all possible codes but all possible guesses too
         Currently I have it eliminate guesses that give no information, but this seems to only eliminate about 16 guesses (16 Nov 2022 10:56)
     Removed the code that removes guesses and added a method that resets the possibleGuesses list (17 Nov 2022 10:19)
+        Removed getGuessPoolSize since it's no longer used (17 Nov 2022 10:26)
 */
 
 import java.util.ArrayList;
@@ -79,9 +80,6 @@ public class MastermindEngine extends MastermindTester.TristenYim2 {
                 i--;
             }
         }
-    }
-    public int getGuessPoolSize() {
-        return possibleGuesses.size();
     }
     public void resetCodePool() {
         possibleCodes.clear();
