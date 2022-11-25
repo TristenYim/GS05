@@ -20,11 +20,120 @@ Maintenance Log:
     Set up the engine so it now will play all games with 6 colors and 10 colors with 3 starting guesses, awaiting results (17 Nov 2022 10:19)
         Removed guess pool size call it no longer displays useful info (17 Nov 2022 10:26)
         Updated the heading (17 Nov 2022 10:36)
-Notes:
-    Initial code: 0011, max 5 rounds avg 4.476, 6 colors
-    Initial Game: 256 combos, 0233, 44 combos, 2415, 7 combos, 0351, 1 combo, 2521
-    Initial code: 0011, max _ rounds avg ____, 10 colors
-    Initial Game: 4096 combos, 0213, 432 combos, 2045, 75 combos, 6027, 14 combos, 3484, 2 combos, 2521
+    Ran the engine and added results (24 Nov 2022 22:24)
+Results:
+Console Output from playing a few thousand games
+C:\Users\tyim7\.jdks\openjdk-19.0.1\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.2.3\lib\idea_rt.jar=50736:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.2.3\bin" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath C:\Users\tyim7\IdeaProjects\GS05\out\production\GS05 MastermindEngineUI
+    [0_o] Starting with: [0011]
+    [o_o] Max possibilities left: 256
+    [o_o] Received 1 black pins and 0 white pins.
+    [o_o] After 1 rounds, guessing [0233]
+    [o_o] Max possibilities left: 44
+    [o_o] Received 0 black pins and 1 white pins.
+    [o_o] After 2 rounds, guessing [2415]
+    [o_o] Max possibilities left: 7
+    [o_o] Received 1 black pins and 2 white pins.
+    [o_o] After 3 rounds, guessing [0351]
+    [o_o] Max possibilities left: 1
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 4 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 5!
+    [0_0] Played 1296 games, with the max rounds being 5 and the average rounds being 4.4760802469135825
+    Time: 97993939871500
+    [0_o] Starting with: [0011]
+    [o_o] Max possibilities left: 4096
+    [o_o] Received 1 black pins and 0 white pins.
+    [o_o] After 1 rounds, guessing [0213]
+    [o_o] Max possibilities left: 432
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 2 rounds, guessing [2045]
+    [o_o] Max possibilities left: 75
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 3 rounds, guessing [6027]
+    [o_o] Max possibilities left: 14
+    [o_o] Received 1 black pins and 0 white pins.
+    [o_o] After 4 rounds, guessing [3484]
+    [o_o] Max possibilities left: 2
+    [o_o] Received 0 black pins and 0 white pins.
+    [o_o] After 5 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 6!
+    [0_0] Played 10000 games, with the max rounds being 7 and the average rounds being 5.991499999999997
+    Time: 246589192980100
+    [0_o] Starting with: [0012]
+    [o_o] Max possibilities left: 276
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 1 rounds, guessing [1103]
+    [o_o] Max possibilities left: 39
+    [o_o] Received 0 black pins and 1 white pins.
+    [o_o] After 2 rounds, guessing [2450]
+    [o_o] Max possibilities left: 7
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 3 rounds, guessing [2241]
+    [o_o] Max possibilities left: 1
+    [o_o] Received 2 black pins and 1 white pins.
+    [o_o] After 4 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 5!
+    [0_0] Played 1296 games, with the max rounds being 6 and the average rounds being 4.4776234567901225
+    Time: 246623970198200
+    [0_o] Starting with: [0012]
+    [o_o] Max possibilities left: 3052
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 1 rounds, guessing [1223]
+    [o_o] Max possibilities left: 199
+    [o_o] Received 1 black pins and 2 white pins.
+    [o_o] After 2 rounds, guessing [3231]
+    [o_o] Max possibilities left: 12
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 3 rounds, guessing [4156]
+    [o_o] Max possibilities left: 3
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 4 rounds, guessing [0405]
+    [o_o] Max possibilities left: 1
+    [o_o] Received 0 black pins and 1 white pins.
+    [o_o] After 5 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 6!
+    [0_0] Played 10000 games, with the max rounds being 8 and the average rounds being 5.931600000000008
+    Time: 272203966703400
+    [0_o] Starting with: [0123]
+    [o_o] Max possibilities left: 312
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 1 rounds, guessing [0024]
+    [o_o] Max possibilities left: 47
+    [o_o] Received 1 black pins and 0 white pins.
+    [o_o] After 2 rounds, guessing [0255]
+    [o_o] Max possibilities left: 6
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 3 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 4!
+    [0_0] Played 1296 games, with the max rounds being 6 and the average rounds being 4.47762345679012
+    Time: 272241283088999
+    [0_o] Starting with: [0123]
+    [o_o] Max possibilities left: 3048
+    [o_o] Received 1 black pins and 1 white pins.
+    [o_o] After 1 rounds, guessing [0145]
+    [o_o] Max possibilities left: 286
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 2 rounds, guessing [4621]
+    [o_o] Max possibilities left: 26
+    [o_o] Received 2 black pins and 0 white pins.
+    [o_o] After 3 rounds, guessing [5017]
+    [o_o] Max possibilities left: 5
+    [o_o] Received 0 black pins and 2 white pins.
+    [o_o] After 4 rounds, guessing [0181]
+    [o_o] Max possibilities left: 2
+    [o_o] Received 1 black pins and 0 white pins.
+    [o_o] After 5 rounds, guessing [2521]
+    [o_o] Max possibilities left: 1
+    [0_0] Won with guess [2521] on round 6!
+    [0_0] Played 10000 games, with the max rounds being 7 and the average rounds being 5.810299999999996
+    Time: 603621732967600
+
+    Process finished with exit code 0
 */
 
 public class MastermindEngineUI {
@@ -32,7 +141,9 @@ public class MastermindEngineUI {
         String[] initialGuesses = {"0011", "0012", "0123"};
         for (int i = 0; i < initialGuesses.length; i++) {
             testInitialGuess(initialGuesses[i], 6);
+            System.out.println("Time: " + System.nanoTime());
             testInitialGuess(initialGuesses[i], 10);
+            System.out.println("Time: " + System.nanoTime());
         }
     }
     private static void testInitialGuess(String initialGuess, int colors) {
